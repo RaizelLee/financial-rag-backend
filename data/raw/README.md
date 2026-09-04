@@ -2,9 +2,12 @@
 
 Raw financial-report PDFs are not committed to this repository.
 
-## Required document
+## Required Document
 
-Place the following document in this directory:
+Download the consolidated financial statements from the official TSMC
+investor-relations website.
+
+Place the PDF at:
 
 ```text
-TSMC_2025Q4_Consolidated_Financial_Statements_C.pdf
+data/raw/TSMC_2025Q4_Consolidated_Financial_Statements_C.pdf

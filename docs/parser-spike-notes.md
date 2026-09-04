@@ -49,7 +49,7 @@ are presented in thousands of New Taiwan dollars.
 | Pages with extractable text | 71 |
 | Pages without extractable text | 14 |
 | Pages requiring OCR or another parser | 1–14 |
-| Pages containing financial amounts | Replace with actual script output |
+| Pages containing financial amounts | 55 |
 
 Pages 15–85 contain an extractable text layer.
 
