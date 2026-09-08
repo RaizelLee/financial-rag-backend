@@ -75,13 +75,18 @@ data/temp/
 
 artifacts/*
 
-# Keep small portfolio evidence files
 !artifacts/.gitkeep
 !artifacts/README.md
 !artifacts/parser_sample.json
 !artifacts/parser_summary.json
 !artifacts/chunk_sample.json
 !artifacts/chunk_summary.json
+
+# Portfolio visualizations
+!artifacts/embeddings_2d.png
+!artifacts/embeddings_3d.png
+!artifacts/embeddings_2d.html
+!artifacts/embeddings_3d.html
 
 
 
