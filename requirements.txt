@@ -1,1 +1,10 @@
 PyMuPDF==1.28.2
+langchain-openai
+langchain-chroma
+langchain-core
+python-dotenv
+numpy
+scikit-learn
+plotly
+gradio
+tesseract

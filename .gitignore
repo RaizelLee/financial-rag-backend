@@ -80,6 +80,18 @@ artifacts/*
 !artifacts/README.md
 !artifacts/parser_sample.json
 !artifacts/parser_summary.json
+!artifacts/chunk_sample.json
+!artifacts/chunk_summary.json
+
+
+
+# ============================================================
+# Gradio generated files
+# ============================================================
+
+gradio_cached_examples/
+flagged/
+
 
 
 # ============================================================
@@ -116,3 +128,8 @@ logs/
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# ============================================================
+# Chroma vector database
+# ============================================================
+chroma_db/

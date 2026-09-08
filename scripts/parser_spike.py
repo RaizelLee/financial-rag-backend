@@ -34,10 +34,19 @@ DOCUMENT_METADATA = {
     "company": "台灣積體電路製造股份有限公司",
     "ticker": "2330",
     "report_type": "consolidated_financial_statements",
+
     "reporting_period": "2025FY",
+    "period_start": "2025-01-01",
     "period_end": "2025-12-31",
+
+    "comparative_period": "2024FY",
+    "comparative_period_start": "2024-01-01",
+    "comparative_period_end": "2024-12-31",
+
     "currency": "TWD",
     "default_unit": "thousand",
+    "default_unit_zh": "新台幣仟元",
+
     "language": "zh-TW",
     "is_consolidated": True,
 }
@@ -101,6 +110,47 @@ def find_amounts(text: str) -> list[str]:
 # ============================================================
 # PDF extraction
 # ============================================================
+OCR_LANGUAGE = "chi_tra+eng"
+OCR_DPI = 300
+
+
+def extract_page_text(
+    page: pymupdf.Page,
+) -> tuple[str, str]:
+    """
+    Use the PDF text layer first.
+    Fall back to OCR when no text is available.
+    """
+
+    text = page.get_text(
+        "text",
+        sort=True,
+    ).strip()
+
+    if text:
+        return text, "text_extracted"
+
+    try:
+        text_page = page.get_textpage_ocr(
+            language=OCR_LANGUAGE,
+            dpi=OCR_DPI,
+            full=True,
+        )
+
+        ocr_text = page.get_text(
+            "text",
+            textpage=text_page,
+            sort=True,
+        ).strip()
+
+    except RuntimeError as error:
+        print(f"OCR failed: {error}")
+        return "", "ocr_failed"
+
+    if ocr_text:
+        return ocr_text, "ocr_extracted"
+
+    return "", "ocr_failed"
 
 def extract_pages(pdf_path: Path) -> list[dict[str, Any]]:
     """
@@ -127,10 +177,9 @@ def extract_pages(pdf_path: Path) -> list[dict[str, Any]]:
         for page_index, page in enumerate(document):
             pdf_page = page_index + 1
 
-            text = page.get_text(
-                "text",
-                sort=True,
-            ).strip()
+            text, extraction_status = (
+                extract_page_text(page)
+            )
 
             blocks = page.get_text(
                 "blocks",
@@ -139,13 +188,6 @@ def extract_pages(pdf_path: Path) -> list[dict[str, Any]]:
 
             images = page.get_images(full=True)
             amounts = find_amounts(text)
-
-            if text:
-                extraction_status = "text_extracted"
-            else:
-                extraction_status = (
-                    "needs_ocr_or_alternative_parser"
-                )
 
             page_data = {
                 "source_id": pdf_path.stem,
@@ -245,6 +287,10 @@ def create_summary(
         ),
         "pages_with_amounts": pages_with_amounts,
         "sample_pages": SAMPLE_PAGE_NUMBERS,
+        "extraction_success_rate": round(
+            len(extractable_pages) / len(pages),
+            4,
+        )
     }
 
 

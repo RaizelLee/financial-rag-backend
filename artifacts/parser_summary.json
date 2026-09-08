@@ -5,9 +5,14 @@
     "ticker": "2330",
     "report_type": "consolidated_financial_statements",
     "reporting_period": "2025FY",
+    "period_start": "2025-01-01",
     "period_end": "2025-12-31",
+    "comparative_period": "2024FY",
+    "comparative_period_start": "2024-01-01",
+    "comparative_period_end": "2024-12-31",
     "currency": "TWD",
     "default_unit": "thousand",
+    "default_unit_zh": "新台幣仟元",
     "language": "zh-TW",
     "is_consolidated": true
   },
@@ -99,5 +104,6 @@
     62,
     67,
     71
-  ]
+  ],
+  "extraction_success_rate": 0.8353
 }
